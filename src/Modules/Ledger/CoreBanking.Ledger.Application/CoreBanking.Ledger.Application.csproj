@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\CoreBanking.Ledger.Domain\CoreBanking.Ledger.Domain.csproj" />
+    <ProjectReference Include="..\CoreBanking.Ledger.Contracts\CoreBanking.Ledger.Contracts.csproj" />
+  </ItemGroup>
+</Project>
