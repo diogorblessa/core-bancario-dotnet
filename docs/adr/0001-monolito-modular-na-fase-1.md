@@ -5,7 +5,7 @@
 
 ## Contexto
 
-O sistema tem três partes que conversam entre si: ledger contábil, conciliação e relatório regulatório de crédito. A fase 1 entrega só o ledger, e a conciliação deve virar um serviço próprio na fase 2. O projeto é desenvolvido por uma pessoa, que está aprendendo C# e .NET, e precisa demonstrar arquitetura de sistemas e aplicações distribuídas sem pagar o custo operacional de microsserviços desde o primeiro dia.
+O sistema tem três partes que conversam entre si: ledger contábil, conciliação e relatório regulatório de crédito. A fase 1 entrega só o ledger, e a conciliação deve virar um serviço próprio na fase 2. O projeto visa demonstrar arquitetura de sistemas e aplicações distribuídas sem pagar o custo operacional de microsserviços desde o primeiro dia.
 
 ## Decisão
 
