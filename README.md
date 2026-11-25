@@ -72,12 +72,19 @@ A partir da fase 1, os testes de integração sobem containers reais (SQL Server
 
 ```
 src/
-  Modules/<Módulo>/CoreBanking.<Módulo>.{Domain,Application,Infrastructure,Contracts}
-  Hosts/                 processos: Api, Reconciliation.Service, RegulatoryReporting.Worker
-tests/                   testes unitários e de integração, por projeto
-docs/adr/                decisões de arquitetura
-tools/                   geradores de dados fictícios (fases 2 e 3)
+├─ Modules/                    um módulo = 4 projetos (ver ADR 0001)
+│  └─ Ledger/
+│     ├─ CoreBanking.Ledger.Domain
+│     ├─ CoreBanking.Ledger.Application
+│     ├─ CoreBanking.Ledger.Infrastructure
+│     └─ CoreBanking.Ledger.Contracts
+└─ Hosts/                      processos executáveis
+   └─ CoreBanking.Api          monolito modular
+tests/                         testes unitários e de integração
+docs/adr/                      decisões de arquitetura
 ```
+
+Os módulos `Credit` e `Reconciliation`, os hosts `Reconciliation.Service` e `RegulatoryReporting.Worker` e a pasta `tools/` (geradores de dados fictícios) entram nas fases 2 e 3.
 
 Arquivos de raiz que valem para toda a solution:
 
