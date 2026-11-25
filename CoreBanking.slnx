@@ -11,6 +11,7 @@
     <Project Path="src/Modules/Ledger/CoreBanking.Ledger.Infrastructure/CoreBanking.Ledger.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/CoreBanking.Ledger.Domain.Tests/CoreBanking.Ledger.Domain.Tests.csproj" />
     <Project Path="tests/CoreBanking.Ledger.IntegrationTests/CoreBanking.Ledger.IntegrationTests.csproj" />
   </Folder>
 </Solution>
