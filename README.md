@@ -51,7 +51,7 @@ flowchart LR
 
 ## Como rodar
 
-**Pré-requisitos:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) e, para desenvolver, o [SDK do .NET 11](https://dotnet.microsoft.com/download).
+**Pré-requisitos:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) e, para desenvolver, o [SDK do .NET 10](https://dotnet.microsoft.com/download).
 
 ```bash
 docker compose up
@@ -89,7 +89,7 @@ Os módulos `Credit` e `Reconciliation`, os hosts `Reconciliation.Service` e `Re
 Arquivos de raiz que valem para toda a solution:
 
 - `global.json`: versão do SDK e o runner de testes (Microsoft Testing Platform).
-- `Directory.Build.props`: `net11.0`, nullable e warnings como erro.
+- `Directory.Build.props`: `net10.0`, nullable e warnings como erro.
 - `Directory.Packages.props`: versões de pacotes centralizadas.
 - `.editorconfig`: estilo verificado pelo `dotnet format`.
 
@@ -98,6 +98,7 @@ Arquivos de raiz que valem para toda a solution:
 - [0001 — Monolito modular na fase 1](docs/adr/0001-monolito-modular-na-fase-1.md)
 - [0002 — SQL Server como banco de dados](docs/adr/0002-sql-server-como-banco.md)
 - [0003 — Floci como emulador de AWS](docs/adr/0003-floci-como-emulador-de-aws.md)
+- [0004 — .NET 10 LTS como plataforma](docs/adr/0004-dotnet-10-lts-como-plataforma.md)
 
 ## Como o projeto é desenvolvido
 
