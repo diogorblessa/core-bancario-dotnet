@@ -98,6 +98,7 @@ Arquivos de raiz que valem para toda a solution:
 - [0001 — Monolito modular na fase 1](docs/adr/0001-monolito-modular-na-fase-1.md)
 - [0002 — SQL Server como banco de dados](docs/adr/0002-sql-server-como-banco.md)
 - [0003 — Floci como emulador de AWS](docs/adr/0003-floci-como-emulador-de-aws.md)
+- [0004 — .NET 11 em vez do .NET 10 LTS](docs/adr/0004-dotnet-11-em-vez-do-10-lts.md)
 
 ## Como o projeto é desenvolvido
 
