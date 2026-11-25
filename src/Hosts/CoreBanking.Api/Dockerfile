@@ -1,5 +1,5 @@
 # Build context: raiz do repositório (ver docker-compose.yml)
-FROM mcr.microsoft.com/dotnet/sdk:11.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /repo
 
 # Restaura primeiro, copiando só os arquivos de projeto, para aproveitar o cache de camadas
@@ -14,7 +14,7 @@ RUN dotnet restore src/Hosts/CoreBanking.Api/CoreBanking.Api.csproj
 COPY src/ src/
 RUN dotnet publish src/Hosts/CoreBanking.Api/CoreBanking.Api.csproj -c Release -o /app --no-restore
 
-FROM mcr.microsoft.com/dotnet/aspnet:11.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
 COPY --from=build /app .
 USER $APP_UID
