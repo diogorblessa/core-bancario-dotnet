@@ -71,6 +71,24 @@ public class JournalEntryTests
     }
 
     [Fact]
+    public void Create_UndefinedSide_Throws()
+    {
+        var undefinedSide = (PostingSide)99;
+
+        var ex = Assert.Throws<DomainException>(() => JournalEntry.Create(
+            BookingDate,
+            RecordedAt,
+            "Lançamento com lado inválido",
+            null,
+            [
+                new PostingLine(SettlementAccountId, undefinedSide, Money.Of(10m)),
+                new PostingLine(CustomerAccountId, undefinedSide, Money.Of(10m)),
+            ]));
+
+        Assert.Equal("posting.invalid_side", ex.Code);
+    }
+
+    [Fact]
     public void Create_EmptyDescription_Throws()
     {
         var ex = Assert.Throws<DomainException>(() => JournalEntry.Create(

@@ -67,6 +67,11 @@ public sealed class JournalEntry
             throw new DomainException("entry.too_few_postings", "An entry needs at least two postings.");
         }
 
+        if (lines.Any(l => !Enum.IsDefined(l.Side)))
+        {
+            throw new DomainException("posting.invalid_side", "Posting side must be debit or credit.");
+        }
+
         if (lines.Any(l => !l.Amount.IsPositive))
         {
             throw new DomainException("posting.non_positive_amount", "Posting amounts must be positive.");
