@@ -44,7 +44,7 @@ flowchart LR
 | Fase | Entrega | Status |
 |---|---|---|
 | 0 | Estrutura do repositório, CI, compose, ADRs iniciais | ✅ Concluída |
-| 1 | Ledger: partidas dobradas, idempotência, concorrência, períodos contábeis, outbox | ⏳ Próxima |
+| 1 | Ledger: partidas dobradas, idempotência, concorrência, períodos contábeis, outbox | 🚧 Em andamento |
 | 2 | Conciliação: RabbitMQ, outbox relay, retry, dead-letter, extração para serviço próprio | — |
 | 3 | Crédito e relatório regulatório: Worker Service, validação, XML, upload para S3 | — |
 | 4 | Opcional: frontend React + TypeScript e deploy curto na AWS | — |
@@ -66,7 +66,9 @@ Testes:
 dotnet test
 ```
 
-A partir da fase 1, os testes de integração sobem containers reais (SQL Server, RabbitMQ, Floci) com Testcontainers, então o Docker precisa estar rodando.
+Os testes de domínio rodam em memória, sem Docker. Os testes de integração sobem containers reais (SQL Server, RabbitMQ, Floci) com Testcontainers, então o Docker precisa estar rodando.
+
+> **Windows 11:** se o `dotnet test` falhar com "Uma política de Controle de Aplicativo bloqueou este arquivo", é o **Controle inteligente de aplicativos** (Smart App Control) bloqueando os executáveis de teste, que não têm assinatura digital. Em máquina de desenvolvimento, desative-o em *Segurança do Windows → Controle de aplicativos e do navegador*. Dependendo da versão do Windows, religá-lo exige reinstalar o sistema.
 
 ## Estrutura
 
@@ -80,7 +82,9 @@ src/
 │     └─ CoreBanking.Ledger.Contracts
 └─ Hosts/                      processos executáveis
    └─ CoreBanking.Api          monolito modular
-tests/                         testes unitários e de integração
+tests/
+├─ CoreBanking.Ledger.Domain.Tests       testes unitários do domínio
+└─ CoreBanking.Ledger.IntegrationTests   testes de integração (API e banco)
 docs/adr/                      decisões de arquitetura
 ```
 
@@ -99,6 +103,8 @@ Arquivos de raiz que valem para toda a solution:
 - [0002 — SQL Server como banco de dados](docs/adr/0002-sql-server-como-banco.md)
 - [0003 — Floci como emulador de AWS](docs/adr/0003-floci-como-emulador-de-aws.md)
 - [0004 — .NET 10 LTS como plataforma](docs/adr/0004-dotnet-10-lts-como-plataforma.md)
+- [0005 — Data contábil informada com fechamento mensal](docs/adr/0005-data-contabil-com-fechamento-mensal.md)
+- [0006 — Saldo armazenado só nas contas de cliente](docs/adr/0006-saldo-armazenado-so-em-contas-de-cliente.md)
 
 ## Como o projeto é desenvolvido
 
