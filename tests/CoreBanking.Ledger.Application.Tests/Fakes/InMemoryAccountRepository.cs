@@ -1,9 +1,11 @@
 using CoreBanking.Ledger.Application.Abstractions;
+using CoreBanking.Ledger.Domain;
 using CoreBanking.Ledger.Domain.Accounts;
 
 namespace CoreBanking.Ledger.Application.Tests.Fakes;
 
-public sealed class InMemoryAccountRepository : IAccountRepository
+// Posting totals are computed from the entries, as the SQL query will do in Task 9.
+public sealed class InMemoryAccountRepository(InMemoryJournalEntryRepository entries) : IAccountRepository
 {
     public List<Account> Accounts { get; } = [];
 
@@ -18,7 +20,17 @@ public sealed class InMemoryAccountRepository : IAccountRepository
 
     public void Add(Account account) => Accounts.Add(account);
 
-    // Implemented in Task 7, together with the balance query tests.
-    public Task<PostingTotals> GetPostingTotalsAsync(Guid accountId, DateOnly asOf, CancellationToken ct) =>
-        throw new NotImplementedException();
+    public Task<PostingTotals> GetPostingTotalsAsync(Guid accountId, DateOnly asOf, CancellationToken ct)
+    {
+        var postings = entries.Entries
+            .Where(e => e.BookingDate <= asOf)
+            .SelectMany(e => e.Postings)
+            .Where(p => p.AccountId == accountId)
+            .ToList();
+
+        var debits = postings.Where(p => p.Side == PostingSide.Debit).Sum(p => p.Amount.Amount);
+        var credits = postings.Where(p => p.Side == PostingSide.Credit).Sum(p => p.Amount.Amount);
+
+        return Task.FromResult(new PostingTotals(Money.Of(debits), Money.Of(credits)));
+    }
 }
