@@ -1,3 +1,4 @@
+using CoreBanking.Ledger.Application.Deposits;
 using CoreBanking.Ledger.Application.Postings;
 using CoreBanking.Ledger.Application.Tests.Fakes;
 using CoreBanking.Ledger.Domain.Accounts;
@@ -13,9 +14,11 @@ public sealed class PostingTestContext
 
     public FakeTimeProvider Time { get; } = new(new DateTimeOffset(2026, 11, 25, 1, 30, 0, TimeSpan.Zero));
 
-    public InMemoryAccountRepository Accounts { get; } = new();
-
     public InMemoryJournalEntryRepository Entries { get; } = new();
+
+    public InMemoryAccountRepository Accounts { get; }
+
+    public InMemoryCustomerRepository Customers { get; } = new();
 
     public InMemoryAccountingCalendarRepository Calendar { get; } = new();
 
@@ -25,6 +28,7 @@ public sealed class PostingTestContext
 
     public PostingTestContext()
     {
+        Accounts = new InMemoryAccountRepository(Entries);
         Settlement = Account.CreateInternal(ChartOfAccounts.SettlementAccount, "Conta de liquidação", AccountNature.Asset);
         Accounts.Add(Settlement);
     }
@@ -37,4 +41,9 @@ public sealed class PostingTestContext
     }
 
     public PostingWorkflow Workflow() => new(Accounts, Entries, Calendar, UnitOfWork, Time);
+
+    public Task<PostingResult> DepositAsync(Account account, decimal amount, DateOnly? bookingDate = null) =>
+        new DepositHandler(Accounts, Workflow(), Time).HandleAsync(
+            new DepositCommand(account.Id, amount, bookingDate, "DEP-001", Description: null),
+            TestContext.Current.CancellationToken);
 }
