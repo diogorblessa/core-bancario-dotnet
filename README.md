@@ -66,7 +66,7 @@ Testes:
 dotnet test
 ```
 
-Os testes de domínio rodam em memória, sem Docker. Os testes de integração sobem containers reais (SQL Server, RabbitMQ, Floci) com Testcontainers, então o Docker precisa estar rodando.
+Os testes de domínio e da Application rodam em memória, sem Docker (a Application usa fakes escritos à mão no lugar do banco). Os testes de integração sobem containers reais (SQL Server, RabbitMQ, Floci) com Testcontainers, então o Docker precisa estar rodando.
 
 > **Windows 11:** se o `dotnet test` falhar com "Uma política de Controle de Aplicativo bloqueou este arquivo", é o **Controle inteligente de aplicativos** (Smart App Control) bloqueando os executáveis de teste, que não têm assinatura digital. Em máquina de desenvolvimento, desative-o em *Segurança do Windows → Controle de aplicativos e do navegador*. Dependendo da versão do Windows, religá-lo exige reinstalar o sistema.
 
@@ -84,6 +84,7 @@ src/
    └─ CoreBanking.Api          monolito modular
 tests/
 ├─ CoreBanking.Ledger.Domain.Tests       testes unitários do domínio
+├─ CoreBanking.Ledger.Application.Tests  testes dos handlers, com fakes
 └─ CoreBanking.Ledger.IntegrationTests   testes de integração (API e banco)
 docs/adr/                      decisões de arquitetura
 ```
